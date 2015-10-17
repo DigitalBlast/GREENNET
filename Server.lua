@@ -29,6 +29,10 @@ local SoftwareVersion = "16.0 GN2"
 
 local requestCount = 0
 
+local UIPage
+
+local size = { term.getSize( )) } 
+
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
  end
@@ -43,8 +47,21 @@ if not fs.exists( "www" ) then
 
 -- GUI function(s)
 
---End GUI function(s)
+function homeUI( )
+    term.setBackgroundColor( colors.gray )
+    term.clear( )
+    term.setCursorPos(1, 1)
+    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+    
+    print( "Home" )
+    term.setCursorPos( 6, 1 )
+    print( "Requests: " )
+    term.setTextColor( colors.cyan )
+    write( requestCount )
+end
 
--- Logic function(s)
+-- End GUI function(s)
 
--- End logic functions
+-- Logic code
+
+-- End logic code
