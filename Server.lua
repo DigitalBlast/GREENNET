@@ -38,7 +38,7 @@ local requestCount = 0
 
 local UIPage
 
-local size = { term.getSize( )) } 
+local size = { term.getSize( ) } 
 
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
@@ -57,17 +57,22 @@ if not fs.exists( "www" ) then
 function homeUI( )
     term.setBackgroundColor( colors.gray )
     term.clear( )
-    term.setCursorPos( 1, 1 )
     paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
     
-    print( "Home" )
-    term.setCursorPos( 6, 1 )
+    term.setCursorPos( 1, 1 )
+    print( "Home | " )
+    term.setCursorPos( 8, 1 )
     print( "Requests: " )
     term.setTextColor( colors.cyan )
+    term.setCursorPos( 18, 1 )
     write( requestCount )
+    term.setCursorPos( 20,1 )
     term.setTextColor( colors.white )
+    print( SoftwareVersion )
+    
+    term.setBackgroundColor( colors.gray )
     term.setCursorPos( 1, 3 )
-    Write( "Server power: " )
+    write( "Server power:" )
     
     if serverMode then
         term.setBackgroundColor( colors.green )
@@ -79,7 +84,14 @@ function homeUI( )
         term.setBackgroundColor( colors.gray )
     end
     
-    term.setCursorPos( 1, 5 ) 
+    term.setCursorPos( 1, 5 )
+    print( "Domain Settings Page" )
+    
+    term.setCursorPos( 1, 7 )
+    print( "Exit GreenNet server Page" )
+    
+    term.setCursorPos( 1, 9 )
+    print( "Power off server Page" )
 end
 
 -- End GUI function(s)
