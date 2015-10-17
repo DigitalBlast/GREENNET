@@ -27,18 +27,25 @@ local SoftwareVersion = "16.0 GN2 ALPHA"
 
 -- Start prep
 
+local size = { term.getSize( ) } 
+
 if not term.isColor( ) then
     print( "Download different version of GreenNet server for this type of computer" )
     error( "This version of GreenNet server is for advanced computers ONLY" )
 end
+
+if not fs.exists( ".GREENNETSERVEROWNER" ) then
+    local settings = fs.open( ".GREENNETSERVEROWNER", "w" )
+    term.setBackgroundColor( colors.gray )
+    term.clear()
+    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+ end
 
 local serverMode = true
 
 local requestCount = 0
 
 local UIPage
-
-local size = { term.getSize( ) } 
 
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
@@ -88,10 +95,10 @@ function homeUI( )
     print( "Domain Settings Page" )
     
     term.setCursorPos( 1, 7 )
-    print( "Exit GreenNet server Page" )
+    print( "Exit GreenNet server" )
     
     term.setCursorPos( 1, 9 )
-    print( "Power off server Page" )
+    print( "Power off server" )
 end
 
 -- End GUI function(s)
