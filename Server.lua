@@ -67,7 +67,19 @@ function homeUI( )
     write( requestCount )
     term.setTextColor( colors.white )
     term.setCursorPos( 1, 3 )
-    print( "" )
+    Write( "Server power: " )
+    
+    if serverMode then
+        term.setBackgroundColor( colors.green )
+        write( "On" )
+        term.setBackgroundColor( colors.gray )
+    else
+        term.setBackgroundColor( colors.red )
+        print( "Off" )
+        term.setBackgroundColor( colors.gray )
+    end
+    
+    term.setCursorPos( 1, 5 ) 
 end
 
 -- End GUI function(s)
