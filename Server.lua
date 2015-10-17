@@ -27,6 +27,13 @@ local SoftwareVersion = "16.0 GN2"
 
 -- Start prep
 
+if not term.isColor( ) then
+    print( "Download different version of GreenNet server for this type of computer" )
+    error( "This version of GreenNet server is for advanced computers ONLY" )
+end
+
+local serverMode = true
+
 local requestCount = 0
 
 local UIPage
@@ -37,9 +44,9 @@ if not fs.exists( "www" ) then
     fs.makeDir( "www" )
  end
  
- if not fs.exists("www/index") then
+ if not fs.exists( "www/index" ) then
     local file = fs.open( "www/index", "w" )
-    file.write( "term.setBackgroundColor(colors.gray) term.clear() term.setCursorPos(1,1) if term.isColor() then term.setTextColor('colors.white') else term.setTextColor('colors.cyan') end print('This is the GreenNet server default webpage')" )
+    file.write( "term.setBackgroundColor(colors.gray) term.clear() term.setCursorPos(1,1) if term.isColor() then term.setTextColor(colors.cyan) else term.setTextColor(colors.white) end print('This is the GreenNet server default webpage')" )
     file.close( )
  end
 
@@ -50,7 +57,7 @@ if not fs.exists( "www" ) then
 function homeUI( )
     term.setBackgroundColor( colors.gray )
     term.clear( )
-    term.setCursorPos(1, 1)
+    term.setCursorPos( 1, 1 )
     paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
     
     print( "Home" )
@@ -58,6 +65,9 @@ function homeUI( )
     print( "Requests: " )
     term.setTextColor( colors.cyan )
     write( requestCount )
+    term.setTextColor( colors.white )
+    term.setCursorPos( 1, 3 )
+    print( "" )
 end
 
 -- End GUI function(s)
