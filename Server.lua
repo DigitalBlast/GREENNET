@@ -5,7 +5,7 @@
 	
 	.Also by useing this software you agree that your website will contain NO inapropreate content
 	
-	 Host ComputerCraft webpages
+	Host ComputerCraft webpages
     Copyright (C) 2014-2015  DigitalBlast (Used to be Sapphire)
 
     This program is free software: you can redistribute it and/or modify
@@ -20,4 +20,31 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Github repository: https://github.com/DigitalBlast/GREENNET
 ]]--
+local SoftwareVersion = "16.0 GN2"
+
+-- Start prep
+
+local requestCount = 0
+
+if not fs.exists( "www" ) then
+    fs.makeDir( "www" )
+ end
+ 
+ if not fs.exists("www/index") then
+    local file = fs.open( "www/index", "w" )
+    file.write( "term.setBackgroundColor(colors.gray) term.clear() term.setCursorPos(1,1) if term.isColor() then term.setTextColor('colors.white') else term.setTextColor('colors.cyan') end print('This is the GreenNet server default webpage')" )
+    file.close( )
+ end
+
+-- End prep
+
+-- GUI function(s)
+
+--End GUI function(s)
+
+-- Logic function(s)
+
+-- End logic functions
