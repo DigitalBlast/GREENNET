@@ -34,11 +34,28 @@ if not term.isColor( ) then
     error( "This version of GreenNet server is for advanced computers ONLY" )
 end
 
+if not http then
+   error( "Error: HTTP REQUIRED!" )
+end
+
+local whitelistCheck = { http.checkURL( "http://greennet.uboxi.com" ) }
+if not whitelistCheck[ 1 ] then
+    error( "A fatal error has caused this: "..whitelistCheck[ 2 ] )
+end
+
 if not fs.exists( ".GREENNETSERVEROWNER" ) then
-    local settings = fs.open( ".GREENNETSERVEROWNER", "w" )
+    local owner = fs.open( ".GREENNETSERVEROWNER", "w" )
     term.setBackgroundColor( colors.gray )
     term.clear()
     paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+    term.setCursorPos( 1, 1 )
+    print( "Server Owner" )
+    term.setBackgroundColor( colors.gray )
+    term.setCursorPos( 1,3 )
+    print( "Enter the server owner: " )
+    local ownerName = read( )
+    owner.write( ownerName )
+    owner.close()
  end
 
 local serverMode = true
@@ -46,6 +63,8 @@ local serverMode = true
 local requestCount = 0
 
 local UIPage
+
+local data = { }
 
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
@@ -62,6 +81,9 @@ if not fs.exists( "www" ) then
 -- GUI function(s)
 
 function homeUI( )
+
+    UIPage = "home"
+
     term.setBackgroundColor( colors.gray )
     term.clear( )
     paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
@@ -92,13 +114,21 @@ function homeUI( )
     end
     
     term.setCursorPos( 1, 5 )
-    print( "Domain Settings Page" )
+    print( "[Domain Settings Page]" )
     
     term.setCursorPos( 1, 7 )
-    print( "Exit GreenNet server" )
+    print( "[Exit GreenNet server]" )
     
     term.setCursorPos( 1, 9 )
-    print( "Power off server" )
+    print( "[Power off server]" )
+end
+
+function domainNameUI( )
+    term.setBackgroundColor( colors.gray )
+    term.clear( )
+    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+    
+    term.setCursorPos( 1, 1 )
 end
 
 -- End GUI function(s)
@@ -109,8 +139,24 @@ end
 
 -- Logic code
 
-function guiHandle()
-    --Nothing yet :)
+function UIHandle()
+    data = { os.pullEvent( "mouse_click" ) }
+    if UIPage == "home" then
+        if data[ 4 ] == 5 and data[ 3 ] >= 1 and data[ 3 ] <= 22 then
+            domainNameUI()
+        elseif data[ 4 ] == 7 and data[ 3 ] >= 1 and data[ 3 ] <= 22 then
+            
+        elseif data[ 4 ] == 9 and data[ 3 ] >= 1 and data[ 3 ] <= 18 then
+           
+        elseif data[ 4 ] == 3 and data[ 3 ] >= 14 and data[ 3 ] <= 16 then
+            if serverMode then
+                serverMode = false
+            else
+                serverMode = true
+            end
+            homeUI()
+        end
+    end 
 end
 
 -- End logic code
