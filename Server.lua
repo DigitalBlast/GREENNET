@@ -96,6 +96,14 @@ end
 
 -- End GUI function(s)
 
+-- Request control
+
+-- Request control
+
 -- Logic code
+
+function guiHandle()
+    --Nothing yet :)
+end
 
 -- End logic code
