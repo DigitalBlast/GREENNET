@@ -23,7 +23,7 @@
     
     Github repository: https://github.com/DigitalBlast/GREENNET
 ]]--
-local SoftwareVersion = "16.0 GN2"
+local SoftwareVersion = "16.0 GN2 ALPHA"
 
 -- Start prep
 
