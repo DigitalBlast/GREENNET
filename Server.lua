@@ -57,6 +57,10 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
     owner.write( ownerName )
     owner.close()
  end
+ 
+ if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then
+    
+ end
 
 local serverMode = true
 
@@ -65,6 +69,8 @@ local requestCount = 0
 local UIPage
 
 local data = { }
+
+local softwareBreak
 
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
@@ -109,7 +115,7 @@ function homeUI( )
         term.setBackgroundColor( colors.gray )
     else
         term.setBackgroundColor( colors.red )
-        print( "Off" )
+        write( "Off" )
         term.setBackgroundColor( colors.gray )
     end
     
@@ -129,6 +135,12 @@ function domainNameUI( )
     paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
     
     term.setCursorPos( 1, 1 )
+    print( "Domain Settings" )
+    term.setBackgroundColor( colors.gray )
+    term.setCursorPos( 1, 3 )
+    print( "Nothing to see here... Yet" )
+    sleep( 3 )
+    homeUI()
 end
 
 -- End GUI function(s)
@@ -145,10 +157,13 @@ function UIHandle()
         if data[ 4 ] == 5 and data[ 3 ] >= 1 and data[ 3 ] <= 22 then
             domainNameUI()
         elseif data[ 4 ] == 7 and data[ 3 ] >= 1 and data[ 3 ] <= 22 then
-            
+            softwareBreak = true
+            term.clear( )
+            term.setCursorPos( 1, 1 )
+            print( "Thank you for using GreenNet Server" )
         elseif data[ 4 ] == 9 and data[ 3 ] >= 1 and data[ 3 ] <= 18 then
-           
-        elseif data[ 4 ] == 3 and data[ 3 ] >= 14 and data[ 3 ] <= 16 then
+            os.shutdown( )
+        elseif data[ 4 ] == 3 and data[ 3 ] >= 14 and data[ 3 ] <= 15 then
             if serverMode then
                 serverMode = false
             else
