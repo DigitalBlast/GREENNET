@@ -23,6 +23,7 @@
     
     Github repository: https://github.com/DigitalBlast/GREENNET
 ]]--
+
 local SoftwareVersion = "16.0 GN2 ALPHA"
 
 -- Start prep
@@ -146,6 +147,10 @@ end
 -- End GUI function(s)
 
 -- Request control
+
+function pageRequestHandle( )
+    
+end
 
 -- Request control
 
