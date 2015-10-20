@@ -62,7 +62,13 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
  if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then
     
  end
-
+ 
+ if not fs.exists( ".GREENNETSERVERSSSDIRSAVE" ) then
+    local file = fs.open( ".GREENNETSERVERSSSDIRSAVE", "w" )
+    file.write( "No File Set!" )
+    file.close( )
+ end
+ 
 local serverMode = true
 
 local requestCount = 0
@@ -74,6 +80,8 @@ local data = { }
 local softwareBreak
 
 local SSSMode = false
+
+local SSSDirectory
 
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
@@ -198,6 +206,55 @@ local function UISSS( )
     print( "Server Side Scripting (SSS) is a block of code that controlls and effects how the website acts and looks." )
 end
 
+local function UISSSConf( )
+    UIPage = "SSSConfig"
+    
+    term.setTextColor( colors.white )
+    
+    term.setBackgroundColor( colors.gray )
+    term.clear( )
+    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+    
+    term.setCursorPos( 1, 1 )
+    print( "SSS | Directory setup for SSS" )
+    
+    term.setBackgroundColor( colors.gray )
+    term.setCursorPos( 1, 3 )
+    print( "Enter SSS file directory:" )
+    
+    SSSDirectory = read( )
+    
+    if not fs.exists( SSSDirectory ) then
+        SSS = false
+        
+        term.setTextColor( colors.white )
+    
+        term.setBackgroundColor( colors.gray )
+        term.clear( )
+        paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+        
+        term.setCursorPos( 1, 1 )
+        print( "SSS Setup | Error" )
+        
+        term.setBackgroundColor( colors.gray )
+        term.setCursorPos( 1, 3 )
+        term.setTextColor( colors.cyan )
+        print( "No such file!" )
+            
+        sleep( 3 )
+    
+        homeUI( )
+    else
+        local file = fs.open( ".GREENNETSERVERSSSDIRSAVE", "w" )
+        file.write( SSSDirectory )
+        file.close( )
+        homeUI( )
+        SSSDirectory = nil
+        
+        homeUI( )
+    end
+end
+
 -- End GUI function(s)
 
 -- Request control
@@ -242,6 +299,8 @@ local function UIHandle()
             UISSS( )
         elseif data[ 4 ] == 7 and data[ 3 ] >= 1 and data[ 3 ] <= 6 then
             homeUI( )
+        elseif data[ 4 ] == 5 and data[ 3 ] >= 1 and data[ 3 ] <= 32 then
+            UISSSConf( )
         end
     end 
 end
