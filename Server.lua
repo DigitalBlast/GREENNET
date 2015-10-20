@@ -47,7 +47,7 @@ end
 if not fs.exists( ".GREENNETSERVEROWNER" ) then
     local owner = fs.open( ".GREENNETSERVEROWNER", "w" )
     term.setBackgroundColor( colors.gray )
-    term.clear()
+    term.clear( )
     paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
     term.setCursorPos( 1, 1 )
     print( "Server Owner" )
@@ -56,7 +56,7 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
     print( "Enter the server owner: " )
     local ownerName = read( )
     owner.write( ownerName )
-    owner.close()
+    owner.close( )
  end
  
  if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then
@@ -73,6 +73,8 @@ local data = { }
 
 local softwareBreak
 
+local SSSMode = false
+
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
  end
@@ -87,9 +89,11 @@ if not fs.exists( "www" ) then
 
 -- GUI function(s)
 
-function homeUI( )
+local function homeUI( )
 
     UIPage = "home"
+    
+    term.setTextColor( colors.white )
 
     term.setBackgroundColor( colors.gray )
     term.clear( )
@@ -127,10 +131,23 @@ function homeUI( )
     print( "[Exit GreenNet server]" )
     
     term.setCursorPos( 1, 9 )
+    print( "[Server Side Script Setting]" )
+    
+    term.setCursorPos( 1, 11 )
     print( "[Power off server]" )
+    
+    term.setTextColor( colors.lightGray )
+    term.setCursorPos( 1, 13 )
+    print( "GreenNet is a ComputerCraft program that relays certin blocks of code to different cliets." )
+    term.setTextColor( colors.white )
 end
 
-function domainNameUI( )
+local function domainNameUI( )
+    
+    UIpage = "domainPage"
+    
+    term.setTextColor( colors.white )
+    
     term.setBackgroundColor( colors.gray )
     term.clear( )
     paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
@@ -141,14 +158,51 @@ function domainNameUI( )
     term.setCursorPos( 1, 3 )
     print( "Nothing to see here... Yet" )
     sleep( 3 )
-    homeUI()
+    homeUI( )
+end
+
+local function UISSS( )
+
+    UIPage = "SSS"
+    
+    term.setTextColor( colors.white )
+    
+    term.setBackgroundColor( colors.gray )
+    term.clear( )
+    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+    
+    term.setCursorPos( 1, 1 )
+    print( "SSS" )
+    term.setCursorPos( 1, 3 )
+    term.setBackgroundColor( colors.gray )
+    print( "SSS Mode:" )
+    term.setCursorPos( 10, 3 )
+    if SSS == true then
+        term.setBackgroundColor( colors.green )
+        write( "On" )
+        term.setBackgroundColor( colors.gray )
+    else
+        term.setBackgroundColor( colors.red )
+        write( "Off" )
+        term.setBackgroundColor( colors.gray )
+    end
+    
+    term.setCursorPos( 1, 5 )
+    print( "[Change Server Script Directory]" )
+    
+    term.setCursorPos( 1, 7 )
+    print( "[Home]" )
+    
+    term.setCursorPos( 1, 9 )
+    term.setTextColor( colors.lightGray )
+    print( "Server Side Scripting (SSS) is a block of code that controlls and effects how the website acts and looks." )
 end
 
 -- End GUI function(s)
 
 -- Request control
 
-function pageRequestHandle( )
+local function pageRequestHandle( )
     
 end
 
@@ -156,7 +210,7 @@ end
 
 -- Logic code
 
-function UIHandle()
+local function UIHandle()
     data = { os.pullEvent( "mouse_click" ) }
     if UIPage == "home" then
         if data[ 4 ] == 5 and data[ 3 ] >= 1 and data[ 3 ] <= 22 then
@@ -165,9 +219,9 @@ function UIHandle()
             softwareBreak = true
             term.clear( )
             term.setCursorPos( 1, 1 )
-            print( "Thank you for using GreenNet Server" )
-        elseif data[ 4 ] == 9 and data[ 3 ] >= 1 and data[ 3 ] <= 18 then
-            os.shutdown( )
+            print( "Please wait..." )
+        elseif data[ 4 ] == 9 and data[ 3 ] >= 1 and data[ 3 ] <= 28 then
+            UISSS()
         elseif data[ 4 ] == 3 and data[ 3 ] >= 14 and data[ 3 ] <= 15 then
             if serverMode then
                 serverMode = false
@@ -175,6 +229,19 @@ function UIHandle()
                 serverMode = true
             end
             homeUI()
+        elseif data[ 4 ] == 11 and data[ 3 ] >= 1 and data[ 3 ] <= 18 then 
+            os.shutdown( )
+        end
+    elseif UIPage == "SSS" then
+        if data[ 4 ] == 3 and data[ 3 ] >= 10 and data[ 3 ] <= 13 then
+            if SSS then
+                SSS = false
+            else
+                SSS = true
+            end
+            UISSS( )
+        elseif data[ 4 ] == 7 and data[ 3 ] >= 1 and data[ 3 ] <= 6 then
+            homeUI( )
         end
     end 
 end
