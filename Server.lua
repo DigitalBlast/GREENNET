@@ -24,7 +24,7 @@
     Github repository: https://github.com/DigitalBlast/GREENNET
 ]]--
 
-local SoftwareVersion = "16.0 GN2 ALPHA"
+local SoftwareVersion = "16.1 GN2 ALPHA"
 
 -- Start prep
 
@@ -63,11 +63,8 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
     
  end
  
- if not fs.exists( ".GREENNETSERVERSSSDIRSAVE" ) then
-    local file = fs.open( ".GREENNETSERVERSSSDIRSAVE", "w" )
-    file.write( "No File Set!" )
-    file.close( )
- end
+ local ownerFile = fs.open( ".GREENNETSERVEROWNER", "r" )
+ local owner = ownerFile.readAll()
  
 local serverMode = true
 
@@ -82,6 +79,8 @@ local softwareBreak
 local SSSMode = false
 
 local SSSDirectory
+
+local domainName
 
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
@@ -142,10 +141,13 @@ local function homeUI( )
     print( "[Server Side Script Setting]" )
     
     term.setCursorPos( 1, 11 )
+    print( "[Server info]" )
+    
+    term.setCursorPos( 1, 13 )
     print( "[Power off server]" )
     
     term.setTextColor( colors.lightGray )
-    term.setCursorPos( 1, 13 )
+    term.setCursorPos( 1, 15 )
     print( "GreenNet is a ComputerCraft program that relays certin blocks of code to different cliets." )
     term.setTextColor( colors.white )
 end
@@ -162,6 +164,26 @@ local function domainNameUI( )
     
     term.setCursorPos( 1, 1 )
     print( "Domain Settings" )
+    term.setBackgroundColor( colors.gray )
+    term.setCursorPos( 1, 3 )
+    print( "Nothing to see here... Yet" )
+    sleep( 3 )
+    homeUI( )
+end
+
+local function serverInfoUI( )
+    
+        
+    UIpage = "serverInfo"
+    
+    term.setTextColor( colors.white )
+    
+    term.setBackgroundColor( colors.gray )
+    term.clear( )
+    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+    
+    term.setCursorPos( 1, 1 )
+    print( "Server Info" )
     term.setBackgroundColor( colors.gray )
     term.setCursorPos( 1, 3 )
     print( "Nothing to see here... Yet" )
@@ -196,63 +218,11 @@ local function UISSS( )
     end
     
     term.setCursorPos( 1, 5 )
-    print( "[Change Server Script Directory]" )
-    
-    term.setCursorPos( 1, 7 )
     print( "[Home]" )
     
     term.setCursorPos( 1, 9 )
     term.setTextColor( colors.lightGray )
-    print( "Server Side Scripting (SSS) is a block of code that controlls and effects how the website acts and looks." )
-end
-
-local function UISSSConf( )
-    UIPage = "SSSConfig"
-    
-    term.setTextColor( colors.white )
-    
-    term.setBackgroundColor( colors.gray )
-    term.clear( )
-    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
-    
-    term.setCursorPos( 1, 1 )
-    print( "SSS | Directory setup for SSS" )
-    
-    term.setBackgroundColor( colors.gray )
-    term.setCursorPos( 1, 3 )
-    print( "Enter SSS file directory:" )
-    
-    SSSDirectory = read( )
-    
-    if not fs.exists( SSSDirectory ) then
-        SSS = false
-        
-        term.setTextColor( colors.white )
-    
-        term.setBackgroundColor( colors.gray )
-        term.clear( )
-        paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
-        
-        term.setCursorPos( 1, 1 )
-        print( "SSS Setup | Error" )
-        
-        term.setBackgroundColor( colors.gray )
-        term.setCursorPos( 1, 3 )
-        term.setTextColor( colors.cyan )
-        print( "No such file!" )
-            
-        sleep( 3 )
-    
-        homeUI( )
-    else
-        local file = fs.open( ".GREENNETSERVERSSSDIRSAVE", "w" )
-        file.write( SSSDirectory )
-        file.close( )
-        homeUI( )
-        SSSDirectory = nil
-        
-        homeUI( )
-    end
+    print( "Server Side Scripting (SSS) is a block of code that controlls and effects how the website acts and looks. WARNING: If SSS is enabled, the server will not send the data until the SSS script launches the event. (greennet_sss_send) The greennet server will launch the event 'Greennet_sss' with the parameters of: {serialized table data}" )
 end
 
 -- End GUI function(s)
@@ -286,7 +256,9 @@ local function UIHandle()
                 serverMode = true
             end
             homeUI()
-        elseif data[ 4 ] == 11 and data[ 3 ] >= 1 and data[ 3 ] <= 18 then 
+        elseif data[ 4 ] == 11 and data[ 3 ] >= 1 and data[ 3 ] <= 13 then 
+            serverInfoUI( )
+        elseif data[ 4 ] == 13 and data[ 3 ] >= 1 and data[ 3 ] <= 18 then 
             os.shutdown( )
         end
     elseif UIPage == "SSS" then
@@ -297,10 +269,8 @@ local function UIHandle()
                 SSS = true
             end
             UISSS( )
-        elseif data[ 4 ] == 7 and data[ 3 ] >= 1 and data[ 3 ] <= 6 then
+        elseif data[ 4 ] == 5 and data[ 3 ] >= 1 and data[ 3 ] <= 6 then
             homeUI( )
-        elseif data[ 4 ] == 5 and data[ 3 ] >= 1 and data[ 3 ] <= 32 then
-            UISSSConf( )
         end
     end 
 end
