@@ -249,7 +249,7 @@ local function UIHandle()
             print( "Please wait..." )
         elseif data[ 4 ] == 9 and data[ 3 ] >= 1 and data[ 3 ] <= 28 then
             UISSS()
-        elseif data[ 4 ] == 3 and data[ 3 ] >= 14 and data[ 3 ] <= 15 then
+        elseif data[ 4 ] == 3 and data[ 3 ] >= 14 and data[ 3 ] <= 16 then
             if serverMode then
                 serverMode = false
             else
