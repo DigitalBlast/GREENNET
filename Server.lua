@@ -73,10 +73,8 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
     owner.close( )
  end
  
-<<<<<<< HEAD
  if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then --Work needed here
-    
-=======
+
  --[[if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then --//Not ready to be used//--
     local domainfile = fs.open( "GREENNETSERVERDOMAINSAVE", "w" )
     term.setBackgroundColor( colors.gray )
@@ -87,7 +85,6 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
     term.setBackgroundColor( colors.gray )
     term.setCursorPos( 1,3 )
     print( "Enter the server domain name: " )
->>>>>>> origin/master
  end
  
  --]]
