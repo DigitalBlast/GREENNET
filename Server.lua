@@ -182,7 +182,7 @@ local function homeUI( )
     
     term.setTextColor( colors.lightGray )
     term.setCursorPos( 1, 15 )
-    print( "GreenNet is a ComputerCraft program that relays certin blocks of code to different cliets." )
+    print( "GreenNet is a ComputerCraft program that relays certain blocks of code to different clients." )
     term.setTextColor( colors.white )
     
     term.setCursorPos( 1, size[ 2 ] )
@@ -262,7 +262,7 @@ local function UISSS( )
     
     term.setCursorPos( 1, 9 )
     term.setTextColor( colors.lightGray )
-    print( "Server Side Scripting (SSS) is a block of code that controlls and effects how the website acts and looks. WARNING: If SSS is enabled, the server will not send the data until the SSS script launches the event. (greennet_sss_send) The greennet server will launch the event 'Greennet_sss' with the parameters of: {serialized table data}" )
+    print( "Server Side Scripting (SSS) is a block of code that controls and effects how the website acts and looks. WARNING: If SSS is enabled, the server will not send the data until the SSS script launches the event. (greennet_sss_send) The greennet server will launch the event 'greennet_sss' with the parameters of: {serialized table data}" )
 end
 
 -- End GUI function(s)
