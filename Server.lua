@@ -26,7 +26,7 @@
 
 local SoftwareVersion = "16.1 GN2 ALPHA"
 
--- Start prep
+--//Prep//--
 
 local size = { term.getSize( ) } 
 
@@ -73,12 +73,31 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
     owner.close( )
  end
  
+<<<<<<< HEAD
  if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then --Work needed here
     
+=======
+ --[[if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then --//Not ready to be used//--
+    local domainfile = fs.open( "GREENNETSERVERDOMAINSAVE", "w" )
+    term.setBackgroundColor( colors.gray )
+    term.clear( )
+    paintutils.drawLine( 1, 1, size[ 1 ], 1, colors.lightGray )
+    term.setCursorPos( 1, 1 )
+    print( "Domain Setup" )
+    term.setBackgroundColor( colors.gray )
+    term.setCursorPos( 1,3 )
+    print( "Enter the server domain name: " )
+>>>>>>> origin/master
  end
+ 
+ --]]
  
  local ownerFile = fs.open( ".GREENNETSERVEROWNER", "r" )
  local owner = ownerFile.readAll()
+ 
+ --//End Prep//--
+ 
+ --//Define local vars//--
  
 local serverMode = true
 
@@ -96,6 +115,10 @@ local SSSDirectory
 
 local domainName
 
+--//End Define Vars//--
+
+--//Setup//--
+
 if not fs.exists( "www" ) then
     fs.makeDir( "www" )
  end
@@ -105,10 +128,10 @@ if not fs.exists( "www" ) then
     file.write( "term.setBackgroundColor(colors.gray) term.clear() term.setCursorPos(1,1) if term.isColor() then term.setTextColor(colors.cyan) else term.setTextColor(colors.white) end print('This is the GreenNet server default webpage')" )
     file.close( )
  end
+ 
+ --//End setup//--
 
--- End prep
-
--- GUI function(s)
+--//GUI functions//--
 
 local function homeUI( )
 
