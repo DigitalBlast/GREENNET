@@ -44,6 +44,20 @@ if not whitelistCheck[ 1 ] then
     error( "A fatal error has caused this: "..whitelistCheck[ 2 ] )
 end
 
+ local function httpGet( sURL, ... )
+    local urlCheck = { http.checkURL( sURL ) }
+    if not urlCheck[ 1 ] then
+        error( "Bad request. Details: "..urlCheck[ 2 ] )
+        
+        return false
+    else
+        local httpContent = http.get( sURL )
+        local pageContent = httpContent.readAll( )
+        
+        return pageContent
+    end
+ end
+
 if not fs.exists( ".GREENNETSERVEROWNER" ) then
     local owner = fs.open( ".GREENNETSERVEROWNER", "w" )
     term.setBackgroundColor( colors.gray )
@@ -59,7 +73,7 @@ if not fs.exists( ".GREENNETSERVEROWNER" ) then
     owner.close( )
  end
  
- if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then
+ if not fs.exists( ".GREENNETSERVERDOMAINSAVE" ) then --Work needed here
     
  end
  
@@ -154,7 +168,7 @@ local function homeUI( )
     term.setCursorPos( 1, size[ 2 ] )
     term.setTextColor( colors.lime )
     write( "Green" )
-    term.setBackgroundColor( colors.white )
+    term.setTextColor( colors.white )
     write( "Net" )
 end
 
